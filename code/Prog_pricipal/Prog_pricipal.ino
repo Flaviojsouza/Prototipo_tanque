@@ -1,24 +1,24 @@
 // Pinos digitais das variaveis de controle do projeto -->sinais temporarios com base em uma leitura
-#define botao_on_off  7;
-#define valvula  8;                                                       //Sinal controla o modulo rele e a valvula
-#define sensor_ultrasonico  12;
+#define botao_on_off  7
+#define valvula  8                                                       //Sinal controla o modulo rele e a valvula
+#define sensor_ultrasonico  12
 
 // Informações sobre o tanque
-unsigned float Altura_do_tanque = 0;
-unsigned float Altura_nivel_maximo = Altura_do_tanque * 0.65 ;            // --> capacidade maxima do tanque 65%                              
+ float Altura_do_tanque = 0;
+ float Altura_nivel_maximo = Altura_do_tanque * 0.65 ;            // --> capacidade maxima do tanque 65%                              
 
 // Nivel dos sinais --> sinal auto(HIGH ou 1) ; sinal baixo(LOW ou 0) ;
-unsigned int sinal_botao_on_off = 0;                                      // --> sinal alterado apenas quando digitalread de botao_on_off é 1
-unsigned int sinal_controle_sensor_ultrasonico = 0;                       // --> sinal alterado apenas quando o tanque está cheio
+ int sinal_botao_on_off = 0;                                      // --> sinal alterado apenas quando digitalread de botao_on_off é 1
+ int sinal_controle_sensor_ultrasonico = 0;                       // --> sinal alterado apenas quando o tanque está cheio
 
 // Declaração das funções do Projeto
-void leitura_botao(unsigned int botao);
+void leitura_botao( int botao);
 
 // Entrada e saida de sinais do arduino
 void setup() {
-  pinMode(botao, OUTPUT);
+  pinMode(botao_on_off, OUTPUT);
   pinMode(valvula, INPUT);
-  pinMode(sensor_ultrasonico, OUTPUT)
+  pinMode(sensor_ultrasonico, OUTPUT);
 
 }
 
@@ -28,7 +28,7 @@ void loop() {
 }
 
 // Definição das funções
-void leitura_botao(unsigned int botao){
+void leitura_botao( int botao){
   if( botao == 1){
     if(sinal_botao_on_off == 0){
       // Ligar circuito
