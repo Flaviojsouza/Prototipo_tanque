@@ -12,13 +12,13 @@ unsigned long pingTimer;                                          // Armazena o 
 
 // Informações sobre o tanque                                           
 #define Altura_do_tanque 20                                       // --> altura em cm
-float Altura_nivel_maximo = Altura_do_tanque - Altura_do_tanque * 0.65; // --> capacidade máxima do tanque 65%     
+float Altura_nivel_maximo = Altura_do_tanque - Altura_do_tanque * 0.20; // --> capacidade máxima do tanque 65%     
 
 // Declaração do sensor
 NewPing sonar(trig, echo, Altura_do_tanque); // Configuração do NewPing com pinos e distância máxima.
 
 // Níveis dos sinais --> sinal alto (HIGH ou 1) ; sinal baixo (LOW ou 0) ;
-int sinal_botao_on_off = 0;                                      // --> estado Desligado / Ligado do sistema
+int sinal_botao_on_off = 1;                                      // --> estado Desligado / Ligado do sistema
 int estado_anterior_botao = LOW;                                 // --> Armazena o estado anterior do botão
 int sinal_controle_sensor_ultrasonico = 0;                       // --> estado tanque Vazio / Cheio 
 
@@ -32,6 +32,7 @@ void setup() {
   pinMode(valvula, OUTPUT);  // Corrigido para OUTPUT
   digitalWrite(valvula, LOW);  // Inicia com a válvula desligada
   pingTimer = millis();
+  Serial.begin(9600);
 }
 
 // Código em loop
@@ -48,9 +49,12 @@ void loop() {
 void leitura_botao() {
   int leitura_botao_atual = digitalRead(botao_on_off);
 
-  // Verifica se o botão foi pressionado (mudança de estado LOW -> HIGH)
+
   if (leitura_botao_atual == HIGH && estado_anterior_botao == LOW) {
     sinal_botao_on_off = !sinal_botao_on_off; // Inverte o estado do sistema (liga/desliga)
+    Serial.print("sinal_botao_on_off: ");
+    Serial.print(sinal_botao_on_off);
+    Serial.println(" sinal");
     // digitalWrite(valvula, sinal_botao_on_off); // Atualiza o estado da válvula conforme o estado do sistema
   }
 
@@ -61,14 +65,31 @@ void leitura_botao() {
 void Medir_distancia() {
   if (sonar.check_timer()) {
     float ultima_medicao = sonar.ping_result / US_ROUNDTRIP_CM; // Converte a medição para centímetros
-    if (ultima_medicao > Altura_nivel_maximo) {
+    Serial.print("ultima medição: ");
+    Serial.print(ultima_medicao);
+    Serial.println("cm");
+    // if (ultima_medicao > Altura_nivel_maximo) {
+    //   sinal_controle_sensor_ultrasonico = 0; // Tanque ainda não está cheio
+    //   if (sinal_botao_on_off == 1) {
+    //     digitalWrite(valvula, HIGH); // Liga a válvula para encher o tanque
+    //   }
+    // } else {
+    //   sinal_controle_sensor_ultrasonico = 1; // Tanque está cheio
+    //   digitalWrite(valvula, LOW); // Fecha a válvula para segurança
+    // }
+
+        // Tanque ainda não está cheio e o sistema está ligado
+    if (ultima_medicao > Altura_nivel_maximo && sinal_botao_on_off == 1) {
       sinal_controle_sensor_ultrasonico = 0; // Tanque ainda não está cheio
-      if (sinal_botao_on_off == 1) {
-        digitalWrite(valvula, HIGH); // Liga a válvula para encher o tanque
-      }
-    } else {
+      digitalWrite(valvula, HIGH); // Liga a válvula para encher o tanque
+      Serial.println("Válvula aberta, enchendo o tanque...");
+    }
+
+    // Tanque está cheio
+    else if (ultima_medicao <= Altura_nivel_maximo) {
       sinal_controle_sensor_ultrasonico = 1; // Tanque está cheio
       digitalWrite(valvula, LOW); // Fecha a válvula para segurança
+      Serial.println("Tanque cheio, válvula fechada.");
     }
   }
 }
