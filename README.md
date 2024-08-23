@@ -1,8 +1,7 @@
 <h1 style="margin-bottom: 20px;">Protótipo para automação do controle de nível em tanques</h1>
 
 <p style="display: flex; justify-content: center; align-items: center; ">
-    <img src="../Prot-tipo_tanque/parte_visual/Diagrama de funcionamento.jpeg" alt="Imagem 1" style="width: 60%; margin-right: 10px;" />
-    <img src="../Prot-tipo_tanque/parte_visual/Prototipo_finalizado.jpeg" alt="Imagem 2" style="width: 30%; height:40% ; margin-left: 10px;" />
+    <img src="parte_visual/Diagrama de funcionamento.jpeg" alt="Imagem 1" style="margin-right: 10px;" />
 </p>
 
 <h2>Objetivo:</h2>
@@ -18,5 +17,9 @@
         5L, Fios, Plugs, Torneira</li>
 </ul>
 
-<h2>Vídeo de demonstração</h2>
-
+<h2>Vídeo de demonstração -> "Clique na imagem"</h2>
+<div style="text-align: center;">
+    <a href="https://youtu.be/ZsauBDp-tVc?si=t5kpjyGAEKArOq-Z" target="_blank">
+        <img src="parte_visual/Prototipo_finalizado.jpeg" alt="Imagem 2" style="width: 40%; height: auto;" />
+    </a>
+</div>
