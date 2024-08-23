@@ -17,7 +17,7 @@
         5L, Fios, Plugs, Torneira</li>
 </ul>
 
-<h2>Vídeo de demonstração -> "Clique na imagem"</h2>
+<h2>Vídeo de demonstração -> "Click na imagem"</h2>
 <div style="text-align: center;">
     <a href="https://youtu.be/ZsauBDp-tVc?si=t5kpjyGAEKArOq-Z" target="_blank">
         <img src="parte_visual/Prototipo_finalizado.jpeg" alt="Imagem 2" style="width: 40%; height: auto;" />
